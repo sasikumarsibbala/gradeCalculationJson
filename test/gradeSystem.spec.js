@@ -7,9 +7,7 @@ const{gradeSystem}=require('../src/gradeSystem.js')
 
 
 describe("PercentageCalculation And Grade",()=>{
-    // beforeEach(function(){
-    // })
-   
+
     it("The percentage is between 90 and 100",() =>{
         
         let gradeA= {
@@ -19,14 +17,12 @@ describe("PercentageCalculation And Grade",()=>{
             'failed': 5,
             'skipped': 3,
             'aborted': 2
-           }
+        }
         var gradeSystem1= new gradeSystem(gradeA);
-        
-    
+
         var result= gradeSystem1.calculateBuildGrade();
         
-        // assert(result == 'A',"percentage is not A grade")
-        expect(result).to.equal("A");
+        assert(result == 'A',"percentage is not A grade");
 
     });
     it("The percentage is between 80 and 90",() =>{
@@ -38,12 +34,11 @@ describe("PercentageCalculation And Grade",()=>{
             'failed': 50,
             'skipped': 3,
             'aborted': 2
-           }
-           let gradeSystem1= new gradeSystem(gradeB);
-       
-      var result= gradeSystem1.calculateBuildGrade();
-        // assert(result== 'B',"percentage is not B grade");
-        expect(result).to.equal("B");
+        }
+        let gradeSystem1= new gradeSystem(gradeB);
+
+        var result= gradeSystem1.calculateBuildGrade();
+        assert(result == 'B',"percentage is not B grade");
 
 
     });
@@ -55,12 +50,12 @@ describe("PercentageCalculation And Grade",()=>{
             'failed': 20,
             'skipped': 13,
             'aborted': 23
-           }
-           var gradeSystem1= new gradeSystem(gradeC);
+        }
+        var gradeSystem1= new gradeSystem(gradeC);
        
         var result=gradeSystem1.calculateBuildGrade();
-        // assert(result!== 'C',"percentage is not C grade");
-        expect(result).to.equal("C");
+
+        assert(result == 'C',"percentage is not C grade");
 
     });
     it("The percentage is between 60 and 70",() =>{
@@ -71,14 +66,12 @@ describe("PercentageCalculation And Grade",()=>{
             'failed': 40,
             'skipped': 23,
             'aborted': 13
-           }
+        }
         var gradeSystem1= new gradeSystem(gradeD);
 
-        
-        
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("D");
-        // assert(result!== 'D',"percentage is not D grade");
+
+        assert(result== 'D',"percentage is not D grade");
 
     });
     it("The percentage is between 0 and 60 ",() =>{
@@ -89,128 +82,141 @@ describe("PercentageCalculation And Grade",()=>{
             'failed': 40,
             'skipped': 63,
             'aborted': 17
-           }
-         var gradeSystem1= new gradeSystem(gradeF);
-        
-        
-        
+        }
+        var gradeSystem1= new gradeSystem(gradeF);
+
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("F");
-        // assert(result!== 'F',"percentage is not F grade");
+
+        assert(result== 'F',"percentage is not F grade");
 
     });
-    it("Total No of testcases are zero ",()=>{
+    it("Total No of testcases are less than zero",()=>{
         var gradeInvalid1= {
             'buildNumber': '123456',
-            'total': 0,
+            'total': -2,
             'passed': 450,
             'failed': 40,
             'skipped': 63,
             'aborted': 17
-           }
-         var  gradeSystem1= new gradeSystem(gradeInvalid1);
-        
-        
+        }
+        var  gradeSystem1= new gradeSystem(gradeInvalid1);
         
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("InvalidGrade");
 
-
+        assert(result!='total testCases are not less than 0 ',"total testCases are not less than 0");
     });
     it("When the passed test case is negative",()=>{
         var gradeInvalid2= {
             'buildNumber': '123456',
-            'total': 0,
+            'total': 100,
             'passed': -450,
             'failed': 40,
             'skipped': 63,
             'aborted': 17
-           }
-           var gradeSystem1= new gradeSystem(gradeInvalid2);
-        
-        
-        
+        }
+        var gradeSystem1= new gradeSystem(gradeInvalid2);
+
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("InvalidGrade");
+
+        assert(result!='passed test cases are not less than 0 ',"passed test cases are not less than 0");
+        
     });
-    it("When the passed test case are greater than total test cases",()=>{
+    it("When the failed test cases are less than 0",()=>{
         var gradeInvalid3= {
             'buildNumber': '123456',
             'total': 0,
             'passed': 450,
-            'failed': 40,
+            'failed': -40,
             'skipped': 63,
             'aborted': 17
-           }
-           var gradeSystem1= new gradeSystem(gradeInvalid3);
-        
-        
-        
+        }
+        var gradeSystem1= new gradeSystem(gradeInvalid3);
+
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("InvalidGrade");
+
+        assert(result!=="failed test cases are not less than 0 ","failed test cases are not less than 0");
     });
-    it("when all the vlaues are zero",()=>{
+    it("when skipped test cases are not less than 0",()=>{
         var gradeInvalid4= {
             'buildNumber': '123456',
-            'total': 0,
+            'total': 150,
             'passed': 0,
             'failed': 0,
-            'skipped': 0,
-            'aborted': 0
-           }
-           var gradeSystem1= new gradeSystem(gradeInvalid4);
-        
-        
-        
+            'skipped': -75,
+            'aborted': 75
+        }
+        var gradeSystem1= new gradeSystem(gradeInvalid4);
+
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("InvalidGrade");
 
-
+        assert(result!=="skipped test cases are not less than 0 ","skipped test cases are not less than 0");
 
     });
     
-    it("when skipped test cases are more than total test cases",()=>{
-        var  gradeInvalid6= {
+    it("when aborted test cases are not less than 0",()=>{
+        var  gradeInvalid5= {
             'buildNumber': '123456',
             'total': 1000,
             'passed': 600,
             'failed': 10,
             'skipped': 1200,
-            'aborted': 0
+            'aborted': -4
            }
-           var gradeSystem1= new gradeSystem(gradeInvalid6);
-        
-        
-        
+        var gradeSystem1= new gradeSystem(gradeInvalid5);
+
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("InvalidGrade");
+
+        assert(result!=="aborted test cases are not less than 0 ","aborted test cases are not less than 0");
+        
     });
     
-    it("when failed test cases are more than total test cases",()=>{
-        var  gradeInvalid8= {
+    it("when passed test cases are not greater than to  total test cases",()=>{
+            var  gradeInvalid5= 
+        {
             'buildNumber': '123456',
-            'total': 1000,
+            'total': 100,
             'passed': 600,
             'failed': 1200,
             'skipped': 24,
             'aborted': 19
            }
-           var gradeSystem1= new gradeSystem(gradeInvalid8);
-        
-        
+        var gradeSystem1= new gradeSystem(gradeInvalid5);
         
         var result= gradeSystem1.calculateBuildGrade();
-        expect(result).to.equal("InvalidGrade");
+       
+        assert(result!=="passed test cases are not greater than to  total test cases ","passed test cases are not greater than to  total test cases");
     });
+    it("when total skipped test cases are not greater than total  test cases",()=>{
+        var  gradeInvalid6= {
+            'buildNumber': '123456',
+            'total': 100,
+            'passed': 60,
+            'failed': 12,
+            'skipped': 204,
+            'aborted': 19
+        }
+        var gradeSystem1= new gradeSystem(gradeInvalid6);
 
-
-
-
-
-
-
-    
-
+        var result= gradeSystem1.calculateBuildGrade();
+        
+        assert(result!="total skipped test cases are not greater than total  test cases ","total skipped test cases are not greater than total  test cases");
+    });
+    it("when total failed test cases are not greater than total test cases ",()=>{
+        var  gradeInvalid7= {
+            'buildNumber': '123456',
+            'total': 100,
+            'passed': 40,
+            'failed': 400,
+            'skipped': 24,
+            'aborted': 19
+        }
+        var gradeSystem1= new gradeSystem(gradeInvalid7);
+        
+        var result= gradeSystem1.calculateBuildGrade();
+       
+       
+        assert(result!="passed test cases are not greater than to  total test cases","passed test cases are not greater than to  total test cases");
+    });
 
 });
     

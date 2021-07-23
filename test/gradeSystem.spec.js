@@ -7,7 +7,7 @@ const{gradeSystem}=require('../src/gradeSystem.js')
 
 
 describe("PercentageCalculation And Grade",()=>{
-
+https://github.com/sasikumarsibbala/gradeCalculationJson/blob/main/test/gradeSystem.spec.js
     it("The percentage is between 90 and 100",() =>{
         
         let gradeA= {
@@ -103,7 +103,7 @@ describe("PercentageCalculation And Grade",()=>{
         
         var result= gradeSystem1.calculateBuildGrade();
 
-        assert(result!='total testCases are not less than 0 ',"total testCases are not less than 0");
+        assert(result!='Invalid Data ',"total testCases are not less than 0");
     });
     it("When the passed test case is negative",()=>{
         var gradeInvalid2= {
@@ -118,7 +118,7 @@ describe("PercentageCalculation And Grade",()=>{
 
         var result= gradeSystem1.calculateBuildGrade();
 
-        assert(result!='passed test cases are not less than 0 ',"passed test cases are not less than 0");
+        assert(result!='Invalid Data ',"passed test cases are not less than 0");
         
     });
     it("When the failed test cases are less than 0",()=>{
@@ -134,22 +134,22 @@ describe("PercentageCalculation And Grade",()=>{
 
         var result= gradeSystem1.calculateBuildGrade();
 
-        assert(result!=="failed test cases are not less than 0 ","failed test cases are not less than 0");
+        assert(result!=="Invalid Data ","failed test cases are not less than 0");
     });
     it("when skipped test cases are not less than 0",()=>{
         var gradeInvalid4= {
             'buildNumber': '123456',
             'total': 150,
-            'passed': 0,
+            'passed': 100,
             'failed': 0,
-            'skipped': -75,
-            'aborted': 75
+            'skipped': -20,
+            'aborted': 80
         }
         var gradeSystem1= new gradeSystem(gradeInvalid4);
 
         var result= gradeSystem1.calculateBuildGrade();
 
-        assert(result!=="skipped test cases are not less than 0 ","skipped test cases are not less than 0");
+        assert(result!=="Invalid Data","skipped test cases are not less than 0");
 
     });
     
@@ -166,7 +166,7 @@ describe("PercentageCalculation And Grade",()=>{
 
         var result= gradeSystem1.calculateBuildGrade();
 
-        assert(result!=="aborted test cases are not less than 0 ","aborted test cases are not less than 0");
+        assert(result!=="Invalid data","aborted test cases are not less than 0");
         
     });
     
@@ -184,7 +184,7 @@ describe("PercentageCalculation And Grade",()=>{
         
         var result= gradeSystem1.calculateBuildGrade();
        
-        assert(result!=="passed test cases are not greater than to  total test cases ","passed test cases are not greater than to  total test cases");
+        assert(result!=="Invalid data","passed test cases are not greater than to  total test cases");
     });
     it("when total skipped test cases are not greater than total  test cases",()=>{
         var  gradeInvalid6= {
@@ -199,24 +199,45 @@ describe("PercentageCalculation And Grade",()=>{
 
         var result= gradeSystem1.calculateBuildGrade();
         
-        assert(result!="total skipped test cases are not greater than total  test cases ","total skipped test cases are not greater than total  test cases");
+        assert(result!="invalid Data","total skipped test cases are not greater than total  test cases");
     });
-    it("when total failed test cases are not greater than total test cases ",()=>{
-        var  gradeInvalid7= {
+   
+    it("when all values are zero",()=>{
+        var  gradeInvalid8= {
             'buildNumber': '123456',
-            'total': 100,
-            'passed': 40,
-            'failed': 400,
-            'skipped': 24,
-            'aborted': 19
+            'total': 0,
+            'passed': 0,
+            'failed': 0,
+            'skipped': 0,
+            'aborted': 0
         }
-        var gradeSystem1= new gradeSystem(gradeInvalid7);
+        var gradeSystem1= new gradeSystem(gradeInvalid8);
         
         var result= gradeSystem1.calculateBuildGrade();
        
        
-        assert(result!="passed test cases are not greater than to  total test cases","passed test cases are not greater than to  total test cases");
+         assert(result!=="Divide by zero error ","all cant be zero ");
+        
     });
+
+    it("when denominator is zero",()=>{
+        var  gradeInvalid8= {
+            'buildNumber': '123456',
+            'total': 150,
+            'passed': 0,
+            'failed': 0,
+            'skipped': 75,
+            'aborted': 75
+        }
+        var gradeSystem1= new gradeSystem(gradeInvalid8);
+        
+        var result= gradeSystem1.calculateBuildGrade();
+       
+       
+         assert(result!=="Divide by zero error ","Denominator cant be zero ");
+        
+    });
+
 
 });
     

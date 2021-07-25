@@ -13,8 +13,9 @@ class gradeSystem{
 
     calculateBuildGrade (){
         let grade="";
-        let  percentage= this.passed/(this.total- (this.skipped+this.aborted));
+        let  percentage=0;
         try{
+             percentage=his.passed/(this.total- (this.skipped+this.aborted));
             if((this.total- (this.skipped+this.aborted)==0)){
                 throw( "Divide by zero error" ); 
             }
@@ -41,8 +42,8 @@ class gradeSystem{
             },
             'D':{
             
-                    'upper': 70,
-                    'lower': 60
+                 'upper': 70,
+                 'lower': 60
                 
             },
             'F':{
